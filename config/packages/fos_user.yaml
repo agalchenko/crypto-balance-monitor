@@ -2,17 +2,25 @@ fos_user:
     db_driver:      orm # can be orm or odm
     firewall_name:  main
     user_class:     App\Application\Sonata\UserBundle\Entity\User
+
     group:
         group_class:   App\Application\Sonata\UserBundle\Entity\Group
         group_manager: sonata.user.orm.group_manager
+
     service:
         user_manager: sonata.user.orm.user_manager
+
     from_email:
         address: "artem@gmail.com"
         sender_name: "Artem"
+
     profile:
-        # Authentication Form
         form:
-            type:               fos_user_profile
-            name:               fos_user_profile_form
-            validation_groups:  [Authentication] # Please note : this is not the default value
+            type:                 sonata_user_profile
+            name:                 sonata_user_profile_form
+            validation_groups:    [Profile, Default]
+    registration:
+        form:
+            type:               FOS\UserBundle\Form\Type\RegistrationFormType
+            name:               sonata_user_registration_form
+            validation_groups:  [Registration, Default]

@@ -1,0 +1,31 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register', 'role': 'form'}}) }}
+
+<div class="form-group has-feedback">
+    {{ form_errors(form.username) }}
+    {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'security.login.username'|trans({}, 'SonataUserBundle')}}) }}
+    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+</div>
+
+<div class="form-group has-feedback">
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'security.login.email'|trans({}, 'SonataUserBundle')}}) }}
+    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+</div>
+
+{% for passwordField in form.plainPassword %}
+    <div class="form-group has-feedback">
+        {{ form_errors(passwordField) }}
+        {{ form_widget(passwordField, {'attr': {'class': 'form-control', 'placeholder': 'security.login.password'|trans({}, 'SonataUserBundle')}}) }}
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    </div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}</button>
+    </div>
+</div>
+
+{{ form_end(form) }}

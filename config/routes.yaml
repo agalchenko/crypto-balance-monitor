@@ -9,3 +9,15 @@ sonata_user_admin_security:
 sonata_user_admin_resetting:
     resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
     prefix: /resetting
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_registration_confirmed:
+    path:     /register/confirmed
+    controller: App\Controller\ConfirmRegistrationController::confirmedAction
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix: /
