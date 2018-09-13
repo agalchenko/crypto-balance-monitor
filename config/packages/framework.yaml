@@ -6,5 +6,7 @@ framework:
         log: true
     cache: null
     translator: { fallbacks: ["%locale%"] }
+    templating:
+        engines: ['twig', 'php']
 parameters:
     env(ENV_secret): ThisTokenIsNotSoSecretChangeIt

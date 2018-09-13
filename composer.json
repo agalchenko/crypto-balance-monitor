@@ -8,11 +8,17 @@
         "doctrine/doctrine-bundle": "^1.8",
         "doctrine/doctrine-migrations-bundle": "^1.3",
         "doctrine/orm": "^2.6",
+        "friendsofsymfony/user-bundle": "^2.1",
         "sonata-project/admin-bundle": "^3.39",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.6",
+        "sonata-project/easy-extends-bundle": "^2.5",
+        "sonata-project/user-bundle": "^4.2",
         "symfony/console": "^4.1",
         "symfony/flex": "^1.0",
         "symfony/framework-bundle": "^4.1",
         "symfony/lts": "^4@dev",
+        "symfony/swiftmailer-bundle": "^3.2",
+        "symfony/templating": "^4.1",
         "symfony/yaml": "^4.1"
     },
     "require-dev": {
