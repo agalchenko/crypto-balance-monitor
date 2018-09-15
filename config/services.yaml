@@ -26,3 +26,24 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Classes\RandomGeneratorFactory: ~
+
+    App\Classes\RandomIntegerGenerator:
+        factory:    'App\Classes\RandomGeneratorFactory:createRandomGenerator'
+        arguments: [ 'App\Classes\RandomIntegerGenerator' ]
+
+    App\Classes\RandomDecimalGenerator:
+        factory:    'App\Classes\RandomGeneratorFactory:createRandomGenerator'
+        arguments: [ 'App\Classes\RandomDecimalGenerator' ]
+
+    # sonata admin
+
+    admin.wallet:
+        class: App\Admin\WalletAdmin
+        arguments: [~, App\Entity\Wallet, ~, '@App\Classes\RandomDecimalGenerator']
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Crypto, label: Wallet, icon: '<i class="fa fa-google-wallet"></i>' }
+        calls:
+            - [ setBaseRoutePattern ]
+        public: true

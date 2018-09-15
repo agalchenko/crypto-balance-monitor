@@ -46,10 +46,27 @@ security:
             anonymous:          true
 
     role_hierarchy:
-        ROLE_ADMIN:       [ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_ADMIN_WALLET_READER:
+            - ROLE_ADMIN_WALLET_LIST
+            - ROLE_ADMIN_WALLET_VIEW
+        ROLE_ADMIN_WALLET_EDITOR:
+            - ROLE_ADMIN_WALLET_CREATE
+            - ROLE_ADMIN_WALLET_EDIT
+        ROLE_ADMIN_WALLET_ADMIN:
+            - ROLE_ADMIN_WALLET_ALL
+
+        ROLE_ADMIN_REFERENCE_READER:
+            - ROLE_ADMIN_WALLET_READER
+        ROLE_ADMIN_REFERENCE_EDITOR:
+            - ROLE_ADMIN_WALLET_EDITOR
+        ROLE_ADMIN_REFERENCE_ADMIN:
+            - ROLE_ADMIN_WALLET_ALL
+
+        ROLE_EMPLOYEE:    [ROLE_USER, ROLE_ADMIN_REFERENCE_READER, ROLE_ADMIN_REFERENCE_EDITOR, ROLE_ADMIN_REFERENCE_ADMIN]
+        ROLE_ADMIN:       [ROLE_EMPLOYEE, ROLE_SONATA_ADMIN, ROLE_ADMIN_REFERENCE_ADMIN]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-#        SONATA:
-#            - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT  # if you are using acl then this line must be commented
+        SONATA:
+            - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT  # if you are using acl then this line must be commented
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
@@ -66,5 +83,5 @@ security:
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
-        - { path: ^/, role: [ROLE_USER] }
+        - { path: ^/, role: [ROLE_USER, ROLE_EMPLOYEE] }
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
