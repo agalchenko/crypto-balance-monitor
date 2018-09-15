@@ -39,6 +39,10 @@ services:
 
     App\Classes\BalanceStatisticCollector:  ~
 
+    App\Classes\EmailSender: ~
+
+    App\Classes\BalanceChangedNotifier: ~
+
     # commands
 
     App\Command\BalanceStatisticCommand:

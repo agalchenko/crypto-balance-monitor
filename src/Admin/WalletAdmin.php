@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Application\Sonata\UserBundle\Entity\User;
+use App\Classes\BalanceChangedNotifier;
 use App\Classes\Interfaces\RandomGeneratorInterface;
 use App\Entity\Currency;
 use App\Entity\Wallet;
@@ -30,18 +31,26 @@ class WalletAdmin extends BaseAdmin
     protected $randomGenerator;
 
     /**
+     * @var BalanceChangedNotifier
+     */
+    protected $balanceChangedNotifier;
+
+    /**
      * @param string $code
      * @param string $class
      * @param string $baseControllerName
      * @param RandomGeneratorInterface $randomGenerator
+     * @param BalanceChangedNotifier $balanceChangedNotifier
      */
     public function __construct(
         string $code,
         string $class,
         string $baseControllerName,
-        RandomGeneratorInterface $randomGenerator
+        RandomGeneratorInterface $randomGenerator,
+        BalanceChangedNotifier $balanceChangedNotifier
     ) {
         $this->randomGenerator = $randomGenerator;
+        $this->balanceChangedNotifier = $balanceChangedNotifier;
 
         parent::__construct($code, $class, $baseControllerName);
     }
@@ -130,6 +139,10 @@ class WalletAdmin extends BaseAdmin
         $originalObject = $em->getUnitOfWork()->getOriginalEntityData($object);
 
         if ($object->getBalance() !== $originalObject['balance']) {
+            $delta = $object->getBalance() - $originalObject['balance'];
+
+            $this->balanceChangedNotifier->notify($object, $delta);
+
             $object->updateBalanceChangedAt();
         }
     }
