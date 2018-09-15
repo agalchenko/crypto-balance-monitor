@@ -56,6 +56,14 @@ class Wallet extends BaseEntity
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getCurrency()->__toString();
+    }
+
+    /**
      * @return User
      */
     public function getUser(): ?User

@@ -27,4 +27,45 @@ class BalanceHistory extends BaseEntity
      * @ORM\ManyToOne(targetEntity="Wallet")
      */
     protected $wallet;
+
+    /**
+     * @return string
+     */
+    public function getBalance(): string
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param string $balance
+     */
+    public function setBalance(string $balance): void
+    {
+        $this->balance = $balance;
+    }
+
+    /**
+     * @return Wallet
+     */
+    public function getWallet(): Wallet
+    {
+        return $this->wallet;
+    }
+
+    /**
+     * @param Wallet $wallet
+     */
+    public function setWallet(Wallet $wallet): void
+    {
+        $this->wallet = $wallet;
+    }
+
+    /**
+     * @param Wallet $wallet
+     */
+    public function logBalance(Wallet $wallet)
+    {
+        $this->setWallet($wallet);
+        $this->setBalance($wallet->getBalance());
+    }
 }

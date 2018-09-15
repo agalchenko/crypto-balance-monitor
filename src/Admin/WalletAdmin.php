@@ -15,6 +15,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class WalletAdmin extends BaseAdmin
 {
+    /**
+     * @var array
+     */
     protected $datagridValues = [
         '_page' => 1,
         '_sort_order' => 'DESC',
@@ -63,6 +66,10 @@ class WalletAdmin extends BaseAdmin
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
         $filter->add('currency');
+
+        if ($this->getAuthorizationChecker()->isGranted(User::ROLE_ADMIN)) {
+            $filter->add('user');
+        }
     }
 
     /**
@@ -79,6 +86,11 @@ class WalletAdmin extends BaseAdmin
             ->add('createdAt');
     }
 
+    /**
+     * @param string $context
+     *
+     * @return \Sonata\AdminBundle\Datagrid\ProxyQueryInterface
+     */
     public function createQuery($context = 'list')
     {
         $query = parent::createQuery($context);

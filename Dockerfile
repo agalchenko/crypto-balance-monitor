@@ -14,6 +14,7 @@ RUN apt-get update -y \
     && apt-get install -y --no-install-recommends \
             php7.2-fpm \
             php7.2-intl \
+            php7.2-mbstring \
             php7.2-mysql \
             php7.2-xml \
             php7.2-zip \

@@ -37,6 +37,14 @@ services:
         factory:    'App\Classes\RandomGeneratorFactory:createRandomGenerator'
         arguments: [ 'App\Classes\RandomDecimalGenerator' ]
 
+    App\Classes\BalanceStatisticCollector:  ~
+
+    # commands
+
+    App\Command\BalanceStatisticCommand:
+        tags:
+            - { name: 'console.command' }
+
     # sonata admin
 
     admin.wallet:
@@ -46,4 +54,13 @@ services:
             - { name: sonata.admin, manager_type: orm, group: Crypto, label: Wallet, icon: '<i class="fa fa-google-wallet"></i>' }
         calls:
             - [ setBaseRoutePattern ]
+        public: true
+
+    admin.balance.history:
+        class: App\Admin\BalanceHistoryAdmin
+        arguments: [~, App\Entity\BalanceHistory, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, group: Crypto, label: Balance History }
+        calls:
+        - [ setBaseRoutePattern ]
         public: true

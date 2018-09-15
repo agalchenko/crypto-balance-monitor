@@ -1,1 +1,2 @@
 # min   hour    day     month   weekday command
+*   *   *   *   *   /srv/bin/console app:balance-statistic
