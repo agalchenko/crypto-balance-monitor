@@ -6,6 +6,7 @@ use App\Application\Sonata\UserBundle\Entity\User;
 use FOS\UserBundle\Model\UserInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\Pager;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class BaseAdmin extends AbstractAdmin
 {
@@ -63,6 +64,14 @@ class BaseAdmin extends AbstractAdmin
         }
 
         $this->getContainer()->get('session')->getFlashBag()->add($type, $message);
+    }
+
+    /**
+     * @return AuthorizationCheckerInterface
+     */
+    protected function getAuthorizationChecker(): AuthorizationCheckerInterface
+    {
+        return $this->getContainer()->get('security.authorization_checker');
     }
 
     /**

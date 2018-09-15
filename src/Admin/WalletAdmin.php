@@ -2,17 +2,25 @@
 
 namespace App\Admin;
 
+use App\Application\Sonata\UserBundle\Entity\User;
 use App\Classes\Interfaces\RandomGeneratorInterface;
 use App\Entity\Currency;
 use App\Entity\Wallet;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Form\Type\EqualType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class WalletAdmin extends BaseAdmin
 {
+    protected $datagridValues = [
+        '_page' => 1,
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'createdAt',
+    ];
+
     /**
      * @var RandomGeneratorInterface
      */
@@ -69,6 +77,21 @@ class WalletAdmin extends BaseAdmin
             ->add('balance')
             ->add('balanceChangedAt')
             ->add('createdAt');
+    }
+
+    public function createQuery($context = 'list')
+    {
+        $query = parent::createQuery($context);
+
+        if (!$this->getAuthorizationChecker()->isGranted(User::ROLE_ADMIN)) {
+            $query->andWhere(
+                $query->expr()->eq($query->getRootAliases()[0] . '.user', ':user')
+            );
+
+            $query->setParameter('user', $this->getUser());
+        }
+
+        return $query;
     }
 
     /**
