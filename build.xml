@@ -5,7 +5,7 @@
     <property name="project.storage.dir" value="${project.basedir}/storage" />
     <property file=".env" prefix="docker-compose" />
 
-    <target name="init" depends="database-deploy,storage-prepare">
+    <target name="init" depends="database-deploy,storage-prepare,create-superadmin">
         <echo message="${phing.project.name} Init - OK" />
     </target>
 
@@ -31,6 +31,13 @@
               command="php ${symfony.console} doctrine:migrations:migrate --env=${symfony.env} --no-interaction --allow-no-migration" />
 
         <echo message="${phing.project.name} DatabaseDeploy - OK" />
+    </target>
+
+    <target name="create-superadmin" depends="database-deploy">
+        <exec passthru="true" checkreturn="true"
+              command="php ${symfony.console} fos:user:create admin admin@admin.com admin --super-admin --env=${symfony.env}" />
+
+        <echo message="${phing.project.name} CreateSuperadmin - OK" />
     </target>
 
     <target name="storage-prepare">
