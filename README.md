@@ -63,7 +63,7 @@ $ docker-compose exec php bin/console app:balance-statistic
 The results will be stored in the Balance History page.
 
 If you want to send an emails to users about changes their wallet's balances
-update `.env` file:
+update `.env` file and then restart docker service php:
 
 * set `MAILER_URL` environment variable value to `gmail://username:password@localhost`
 where your should set your own gmail username (email) and password. 
