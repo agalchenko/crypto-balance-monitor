@@ -60,7 +60,7 @@ class Wallet extends BaseEntity
      */
     public function __toString()
     {
-        return $this->getCurrency()->__toString();
+        return $this->getCurrency() ? $this->getCurrency()->__toString() : '';
     }
 
     /**
