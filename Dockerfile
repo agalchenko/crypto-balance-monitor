@@ -51,6 +51,12 @@ RUN apt-get update -y \
     && mkdir -p /tmp/sessions \
     && chmod -R 777 /tmp/sessions
 
+COPY docker/app.crontab /var/spool/cron/crontabs/root
+
+RUN chmod 0600 /var/spool/cron/crontabs/root
+
+RUN service cron start
+
 CMD ["php-fpm7.2"]
 
 

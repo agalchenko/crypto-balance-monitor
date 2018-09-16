@@ -53,14 +53,29 @@ You will be able to register and authorize in the Crypto Balance Monitor system.
 **For testing period were added some hack:**
 random generation of Wallet balance value byt updating user wallet form edit form.
 
-**The command that allows you to collect statistics on the balance of wallets:**
-can be added to crontab or started manually.
+**The command that allows you to collect statistics on the balance of wallets.**
+
+can be added to crontab:
+
+```sh
+$ docker-compose exec php service cron start
+```
+
+or started manually:
 
 ```sh
 $ docker-compose exec php bin/console app:balance-statistic
 ```
 
-The results will be stored in the Balance History page.
+The results will be stored in the **Balance History** page.
+
+Run the command below if you want to stop crontab execution:
+
+```sh
+$ docker-compose exec php service cron stop
+```
+
+## Email sending
 
 If you want to send an emails to users about changes their wallet's balances
 update `.env` file and then **restart docker service php**:
